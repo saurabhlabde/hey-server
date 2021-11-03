@@ -1,0 +1,84 @@
+datasource db {
+        provider = "postgresql"
+        url      = env("DATABASE_URL")
+}
+
+generator client {
+        provider = "prisma-client-js"
+}
+
+model User {
+        id           Int        @id @default(autoincrement())
+        firstname    String
+        lastname     String
+        email        String     @unique
+        password     String
+        profileImage String
+        createdAtIso String
+        createdAt    DateTime   @default(now())
+        lastOnlineAt Int?
+        ChatRoom     ChatRoom[]
+        Messages     Message[]
+
+        ChatRoomUser ChatRoomUser[]
+        @@map("user")
+}
+
+enum MessageType {
+        SEND
+        DELIVERED
+        READ
+}
+
+model Message {
+        id               Int          @id @default(autoincrement())
+        content          String
+        userID           Int
+        chatroomID       Int
+        image            String?
+        status           MessageType?
+        replyToMessageID Int?
+        forUserId        Int?
+        createdAtIso     String
+        createdAt        DateTime     @default(now())
+
+        ChatRoomMessages    ChatRoom?  @relation("messages", fields: [chatRoomId], references: [id])
+        ChatRoomLastMessage ChatRoom[] @relation("lastMessage")
+
+        chatRoomId Int?
+
+        User   User? @relation(fields: [userId], references: [id])
+        userId Int?
+        @@map("message")
+}
+
+model ChatRoom {
+        id           Int      @id @default(autoincrement())
+        newMessages  Int      @default(0)
+        Admin        User     @relation(fields: [userId], references: [id])
+        name         String
+        imageUrl     String
+        createdAtIso String
+        createdAt    DateTime @default(now())
+
+        Messages    Message[] @relation("messages")
+        lastMessage Message   @relation("lastMessage", fields: [messageId], references: [id])
+
+        userId    Int
+        messageId Int
+
+        ChatRoomUser ChatRoomUser[]
+        @@map("chatRoom")
+}
+
+model ChatRoomUser {
+        id           Int      @id @default(autoincrement())
+        chatRoom     ChatRoom @relation(fields: [chatRoomId], references: [id])
+        user         User     @relation(fields: [userId], references: [id])
+        createdAtIso String
+        createdAt    DateTime @default(now())
+
+        chatRoomId Int
+        userId     Int
+        @@map("chatRoomUser")
+}

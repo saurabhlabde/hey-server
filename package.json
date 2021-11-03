@@ -1,0 +1,53 @@
+{
+  "name": "hey-server",
+  "version": "1.0.0",
+  "description": "hey server",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --loader ts-node/esm ./src/index.ts",
+    "dev": "nodemon ./src/index.ts"
+  },
+  "author": "intro.inc",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^3.1.1",
+    "apollo-server": "^3.3.0",
+    "apollo-server-express": "2.9.15",
+    "bcryptjs": "^2.4.3",
+    "class-validator": "^0.13.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "graphql": "^15.5.2",
+    "graphql-subscriptions": "^1.2.1",
+    "jsonwebtoken": "^8.5.1",
+    "nanoid": "^3.1.25",
+    "nodemailer": "^6.6.3",
+    "nodemon": "2.0.7",
+    "prisma": "^3.1.1",
+    "reflect-metadata": "^0.1.13",
+    "ts-node": "^10.2.1",
+    "type-graphql": "^1.1.1",
+    "typescript": "^4.4.2"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.12",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.13",
+    "@types/graphql": "^14.5.0",
+    "@types/jsonwebtoken": "^8.5.5",
+    "@types/nanoid": "^3.0.0",
+    "@types/nodemailer": "^6.4.4",
+    "@types/nodemon": "^1.19.1",
+    "@types/reflect-metadata": "^0.1.0",
+    "tsconfig-paths": "^3.11.0",
+    "typescript-transform-paths": "^3.3.1"
+  },
+  "prisma": {
+    "schema": "./src/db/prisma/schema.prisma"
+  }
+}

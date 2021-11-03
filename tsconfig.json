@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "lib": ["es6", "esnext.asynciterable"],
+    "outDir": "dist",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "strictPropertyInitialization": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strict": true,
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "typeRoots": ["node_modules/@types", "./src/types"],
+    "moduleResolution": "node",
+    "rootDir": ".",
+    "baseUrl": "./src",
+    "paths": {
+      "@config/*": ["config/*"],
+      "@db/*": ["db/*"],
+      "@graphql/*": ["graphql/*"],
+      "@libs/*": ["libs/*"],
+      "@services/*": ["services/*"],
+      "@resolver/*": ["graphql/resolver/*"],
+      "@src/types/*": ["types/*"],
+      "@utils/*": ["utils/*"]
+    },
+    "plugins": [
+      { "transform": "typescript-transform-paths" },
+      { "transform": "typescript-transform-paths", "afterDeclarations": true }
+    ]
+  },
+
+  "include": ["src/**/*.ts", ".ts", ".tsx"],
+  "exclude": ["node_modules", ".vscode", "yarn.lock", "yarn-error.log"]
+}
