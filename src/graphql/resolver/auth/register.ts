@@ -3,7 +3,7 @@ import { UserInputError } from 'apollo-server';
 import { hash } from "bcryptjs";
 
 // input
-import { RegisterInput } from '../../type/input/register'
+import { RegisterInput } from '../../type/input/auth/register'
 
 // util
 import { generateMessage } from '../../../utils/jwt/message';

@@ -3,7 +3,7 @@ import * as bycrypt from "bcryptjs";
 import { UserInputError } from 'apollo-server';
 
 // input
-import { LoginInput } from '../../type/input/register'
+import { LoginInput } from '../../type/input/auth/register'
 import { generateMessage } from '../../../utils/jwt/message';
 
 // utils
