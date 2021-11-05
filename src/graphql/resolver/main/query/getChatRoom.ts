@@ -56,6 +56,12 @@ export class GetChatRoomResolver {
                                                         lastMessage: true
                                                 }
                                         }
+                                }, orderBy: {
+                                        chatRoom: {
+                                                lastMessage: {
+                                                        createdAt: "desc"
+                                                }
+                                        }
                                 }
                         })
 

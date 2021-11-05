@@ -58,15 +58,7 @@ export class CratedMessageResolver {
                                 }
                         })
 
-                        // const res = await prisma.chatRoom.findFirst({
-                        //         where: {
-                        //                 id: chatRoomId
-                        //         }, include: {
-                        //                 lastMessage: true
-                        //         }
-                        // })
-
-                        // console.log(res, '__res');
+                        await ctx.pubSub.publish("ADD_MESSAGES", {})
 
                         return true
 

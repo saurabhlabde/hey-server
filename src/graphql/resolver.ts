@@ -1,6 +1,3 @@
-// hello
-import { HelloResolver } from './resolver/hello'
-
 // auth
 import { RegisterResolver } from './resolver/auth/register'
 import { LoginResolver } from './resolver/auth/login'
@@ -13,10 +10,10 @@ import { CratedMessageResolver } from './resolver/main/mutation/cratedMessage'
 import { GetChatRoomResolver } from './resolver/main/query/getChatRoom'
 import { GetMessagesResolver } from './resolver/main/query/getMessages'
 
+// subscribe
+import { MessageSubscriptionResolver } from './resolver/main/subscription/message'
 
 export const resolvers = [
-        //  test
-        HelloResolver,
 
         // auth
         RegisterResolver,
@@ -29,4 +26,7 @@ export const resolvers = [
         CratedMessageResolver,
         GetChatRoomResolver,
         GetMessagesResolver,
+
+        // subscribe
+        MessageSubscriptionResolver,
 ] as const

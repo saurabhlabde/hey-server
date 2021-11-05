@@ -9,7 +9,8 @@ export interface IContextRes {
 export type IPrisma = PrismaClient<Prisma.PrismaClientOptions, never, Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined>
 
 export interface IContext {
-        res: express.Response<any, Record<string, any>>
+        res?: express.Response<any, Record<string, any>>
         prisma: IPrisma
         pubSub: PubSub
+        Authorization?: string
 }

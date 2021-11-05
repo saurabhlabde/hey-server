@@ -1,24 +1,26 @@
-import { Arg, Ctx, Query, Resolver } from 'type-graphql'
-import { UserInputError } from 'apollo-server';
-
-
-// util
-import { generateMessage } from '../../../../utils/jwt/message';
-import { validAuth } from '../../../../utils/jwt/authCheck';
+import { UserInputError } from "apollo-server-errors"
+import { Arg, Ctx, Resolver, Subscription } from "type-graphql"
 
 // gql
-import { GetMessageInput } from '../../../type/input/main/query';
+import { Message } from "../../../../graphql/type/model"
+import { MessageSubscribeInput } from "../../../../graphql/type/input/subscription/subscription"
+
+// utils
+import { generateMessage } from "../../../../utils/jwt/message"
+import { validAuth } from "../../../../utils/jwt/authCheck"
 
 // type
-import { IContext } from '@src/types/config/bootstrap';
-import { IValidAuth } from '@src/types/utils/jwt';
-import { IError } from '@src/types/utils/validation';
+import { IValidAuth } from "@src/types/utils/jwt"
+import { IError } from "@src/types/utils/validation"
 
-Resolver()
-export class GetMessagesResolver {
+@Resolver()
+export class MessageSubscriptionResolver {
+        @Subscription(() => [Message], {
+                topics: ["ADD_MESSAGES"],
+        })
 
-        @Query(() => Boolean)
-        async getMessagesResolver(@Arg('messages') room: GetMessageInput, @Ctx() ctx: IContext) {
+        async getMessageSubscription(@Arg('message') room: MessageSubscribeInput, @Ctx() ctx: any,) {
+
                 const messages: Array<IError> = []
 
                 const { roomId } = room
@@ -33,8 +35,6 @@ export class GetMessagesResolver {
                         throw new UserInputError('NOT_FOUND_ERROR', { message })
                 }
 
-                const { user }: IValidAuth = await validAuth(ctx)
-
                 const prisma = ctx.prisma
 
                 try {
@@ -47,9 +47,9 @@ export class GetMessagesResolver {
                                 }
                         })
 
-                        console.log(resMessages, 'resMessages');
+                        // console.log(resMessages, 'resMessages');
 
-                        return true
+                        return resMessages
 
                 } catch (error) {
                         const message = generateMessage({

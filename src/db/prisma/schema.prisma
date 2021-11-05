@@ -33,15 +33,15 @@ enum MessageType {
 
 model Message {
         id               Int          @id @default(autoincrement())
-        content          String
         userID           Int
+        content          String?
         image            String?
         status           MessageType?
         replyToMessageID Int?
         forUserId        Int?
+        chatRoomID       Int
         createdAtIso     String
         createdAt        DateTime     @default(now())
-        chatRoomID       Int
 
         MessagesChatRoom ChatRoom[] @relation("messages")
         ChatRoom         ChatRoom[] @relation("last_message")

@@ -1,5 +1,6 @@
 import "reflect-metadata";
 
+import { createServer } from 'http';
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -11,6 +12,9 @@ import { resolvers } from "../graphql/resolver";
 
 // type
 import { IContextRes } from "@src/types/config/bootstrap";
+
+// utils
+import { validAuthSubscription } from '../utils/jwt/authCheck'
 
 export const prisma = new PrismaClient()
 
@@ -46,6 +50,7 @@ export const bootstrap = async () => {
                 tracing: true,
                 subscriptions: {
                         onConnect(connectionParams, webSocket) {
+                                validAuthSubscription({ context: connectionParams })
                                 console.log("websocket connect");
                         },
                         onDisconnect() {
@@ -54,9 +59,13 @@ export const bootstrap = async () => {
                 },
         });
 
-        server.applyMiddleware({ app, cors: false });
+        server.applyMiddleware({ app });
 
-        app.listen(PORT, () => {
+        const httpServer = createServer(app);
+
+        server.installSubscriptionHandlers(httpServer);
+
+        httpServer.listen(PORT, () => {
                 return console.log(`server online PORT ${PORT}`);
         });
 };
