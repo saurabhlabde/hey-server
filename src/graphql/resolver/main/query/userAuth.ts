@@ -24,6 +24,7 @@ export class UserAuthResolver {
                 const prisma = ctx.prisma
 
                 try {
+
                         const res = await prisma.user.findFirst({
                                 where: {
                                         id: user.userId

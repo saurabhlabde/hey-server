@@ -9,6 +9,9 @@ import { CreateChatRoomResolver } from './resolver/main/mutation/createChatRoom'
 import { CratedMessageResolver } from './resolver/main/mutation/cratedMessage'
 import { GetChatRoomResolver } from './resolver/main/query/getChatRoom'
 import { GetMessagesResolver } from './resolver/main/query/getMessages'
+import { SearchResolver } from './resolver/main/query/search'
+import { GetUserResolver } from './resolver/main/query/user'
+import { GetUsersResolver } from './resolver/main/query/users'
 
 // subscribe
 import { MessageSubscriptionResolver } from './resolver/main/subscription/message'
@@ -26,6 +29,9 @@ export const resolvers = [
         CratedMessageResolver,
         GetChatRoomResolver,
         GetMessagesResolver,
+        SearchResolver,
+        GetUserResolver,
+        GetUsersResolver,
 
         // subscribe
         MessageSubscriptionResolver,

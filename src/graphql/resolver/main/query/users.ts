@@ -1,4 +1,4 @@
-import { Ctx, Query, Resolver } from 'type-graphql'
+import { Arg, Ctx, Query, Resolver } from 'type-graphql'
 import { UserInputError } from 'apollo-server';
 
 
@@ -7,22 +7,25 @@ import { generateMessage } from '../../../../utils/jwt/message';
 import { validAuth } from '../../../../utils/jwt/authCheck';
 
 // gql
-import { UserAuthReturn } from '../../../type/return/main';
-import { ChatRoomUser } from '../../../type/model';
+import { UsersInput } from '../../../type/input/main/query';
+import { User } from '../../../type/model';
 
 // type
 import { IContext } from '@src/types/config/bootstrap';
 import { IValidAuth } from '@src/types/utils/jwt';
 
 Resolver()
-export class GetChatRoomResolver {
+export class GetUsersResolver {
 
-        @Query(() => [ChatRoomUser])
-        async getChatRoom(@Ctx() ctx: IContext) {
+        @Query(() => [User])
+        async getUsers(@Arg('users') users: UsersInput, @Ctx() ctx: IContext) {
 
                 const { user }: IValidAuth = await validAuth(ctx)
 
+                const { type } = users
+
                 const prisma = ctx.prisma
+
 
                 try {
 
@@ -49,24 +52,25 @@ export class GetChatRoomResolver {
                                                         userId: { notIn: user.userId }
                                                 }
                                         ]
-                                },
-                                include: {
-                                        user: true,
-                                        chatRoom: {
-                                                include: {
-                                                        lastMessage: true
-                                                }
-                                        }
-                                }, orderBy: {
-                                        chatRoom: {
-                                                lastMessage: {
-                                                        createdAt: "desc"
-                                                }
-                                        }
+                                }, select: {
+                                        userId: true
                                 }
                         })
 
-                        return resChatRoomUser
+                        const resUsers = await prisma.user.findMany({
+                                where: {
+                                        AND: [
+                                                {
+                                                        id: { notIn: [...resChatRoomUser.map((user: any) => user.userId)] }
+                                                },
+                                                {
+                                                        id: { notIn: user.userId }
+                                                }
+                                        ]
+                                }
+                        })
+
+                        return resUsers
 
                 } catch (error) {
                         const message = generateMessage({

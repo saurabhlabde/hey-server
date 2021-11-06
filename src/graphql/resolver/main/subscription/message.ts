@@ -1,5 +1,5 @@
 import { UserInputError } from "apollo-server-errors"
-import { Arg, Ctx, Resolver, Subscription } from "type-graphql"
+import { Arg, Ctx, Resolver, Root, Subscription } from "type-graphql"
 
 // gql
 import { Message } from "../../../../graphql/type/model"
@@ -7,19 +7,17 @@ import { MessageSubscribeInput } from "../../../../graphql/type/input/subscripti
 
 // utils
 import { generateMessage } from "../../../../utils/jwt/message"
-import { validAuth } from "../../../../utils/jwt/authCheck"
 
 // type
-import { IValidAuth } from "@src/types/utils/jwt"
 import { IError } from "@src/types/utils/validation"
 
 @Resolver()
 export class MessageSubscriptionResolver {
-        @Subscription(() => [Message], {
+        @Subscription(() => Message, {
                 topics: ["ADD_MESSAGES"],
         })
 
-        async getMessageSubscription(@Arg('message') room: MessageSubscribeInput, @Ctx() ctx: any,) {
+        async getMessageSubscription(@Arg('message') room: MessageSubscribeInput, @Ctx() ctx: any, @Root() payload: any) {
 
                 const messages: Array<IError> = []
 
@@ -39,17 +37,13 @@ export class MessageSubscriptionResolver {
 
                 try {
 
-                        const resMessages: any = await prisma.message.findMany({
+                        const resMessage = await prisma.message.findFirst({
                                 where: {
-                                        chatRoomID: roomId
-                                }, orderBy: {
-                                        createdAt: "desc"
-                                }
+                                        id: payload?.id
+                                },
                         })
 
-                        // console.log(resMessages, 'resMessages');
-
-                        return resMessages
+                        return resMessage
 
                 } catch (error) {
                         const message = generateMessage({

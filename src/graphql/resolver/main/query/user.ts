@@ -7,8 +7,8 @@ import { generateMessage } from '../../../../utils/jwt/message';
 import { validAuth } from '../../../../utils/jwt/authCheck';
 
 // gql
-import { GetMessageInput } from '../../../type/input/main/query';
-import { Message } from '../../../type/model';
+import { UserInput } from '../../../type/input/main/query';
+import { User } from '../../../type/model';
 
 // type
 import { IContext } from '@src/types/config/bootstrap';
@@ -16,15 +16,15 @@ import { IValidAuth } from '@src/types/utils/jwt';
 import { IError } from '@src/types/utils/validation';
 
 Resolver()
-export class GetMessagesResolver {
+export class GetUserResolver {
 
-        @Query(() => [Message])
-        async getMessages(@Arg('messages') room: GetMessageInput, @Ctx() ctx: IContext) {
+        @Query(() => User)
+        async getUser(@Arg('user') user_i: UserInput, @Ctx() ctx: IContext) {
                 const messages: Array<IError> = []
 
-                const { roomId } = room
+                const { id } = user_i
 
-                if (!roomId) {
+                if (!id) {
                         const message = generateMessage({
                                 messages,
                                 message: "invalid user id",
@@ -40,15 +40,13 @@ export class GetMessagesResolver {
 
                 try {
 
-                        const resMessages: any = await prisma.message.findMany({
+                        const resUser = await prisma.user.findFirst({
                                 where: {
-                                        chatRoomID: roomId
-                                }, orderBy: {
-                                        createdAt: "desc"
+                                        id
                                 }
                         })
 
-                        return resMessages
+                        return resUser
 
                 } catch (error) {
                         const message = generateMessage({
@@ -61,4 +59,5 @@ export class GetMessagesResolver {
                 }
 
         }
+
 }
