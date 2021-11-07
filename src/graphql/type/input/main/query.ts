@@ -28,3 +28,10 @@ export class UserInput {
         @Field({ nullable: true })
         id: number
 }
+
+
+@InputType()
+export class CheckRoomUserInput {
+        @Field()
+        userId: number
+}

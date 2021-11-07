@@ -12,6 +12,7 @@ import { GetMessagesResolver } from './resolver/main/query/getMessages'
 import { SearchResolver } from './resolver/main/query/search'
 import { GetUserResolver } from './resolver/main/query/user'
 import { GetUsersResolver } from './resolver/main/query/users'
+import { CheckRoomUserResolver } from './resolver/main/query/checkRoomUser'
 
 // subscribe
 import { MessageSubscriptionResolver } from './resolver/main/subscription/message'
@@ -32,6 +33,7 @@ export const resolvers = [
         SearchResolver,
         GetUserResolver,
         GetUsersResolver,
+        CheckRoomUserResolver,
 
         // subscribe
         MessageSubscriptionResolver,
