@@ -24,16 +24,6 @@ export class GetUserResolver {
 
                 const { id } = user_i
 
-                if (!id) {
-                        const message = generateMessage({
-                                messages,
-                                message: "invalid user id",
-                                type: "error"
-                        })
-
-                        throw new UserInputError('NOT_FOUND_ERROR', { message })
-                }
-
                 const { user }: IValidAuth = await validAuth(ctx)
 
                 const prisma = ctx.prisma
@@ -42,7 +32,7 @@ export class GetUserResolver {
 
                         const resUser = await prisma.user.findFirst({
                                 where: {
-                                        id
+                                        id: id ? id : user.userId
                                 }
                         })
 

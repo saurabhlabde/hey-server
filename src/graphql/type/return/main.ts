@@ -14,3 +14,16 @@ export class UserAuthReturn {
         @Field()
         profileImage: string
 }
+
+
+@ObjectType()
+export class CreateChatRoomReturn {
+        @Field()
+        id: number
+
+        @Field()
+        chatRoomId: number
+
+        @Field()
+        userId: number
+}

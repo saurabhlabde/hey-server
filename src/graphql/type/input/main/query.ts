@@ -25,6 +25,6 @@ export class UsersInput {
 
 @InputType()
 export class UserInput {
-        @Field()
+        @Field({ nullable: true })
         id: number
 }

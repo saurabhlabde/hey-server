@@ -8,6 +8,9 @@ import { CrateRoomInput } from '../../../type/input/main/mutation'
 import { generateMessage } from '../../../../utils/jwt/message';
 import { validAuth } from '../../../../utils/jwt/authCheck';
 
+// gql
+import { CreateChatRoomReturn } from '../../../../graphql/type/return/main';
+
 // type
 import { IContext } from '@src/types/config/bootstrap';
 import { IError } from '@src/types/utils/validation';
@@ -16,7 +19,7 @@ import { IValidAuth } from '@src/types/utils/jwt';
 Resolver()
 export class CreateChatRoomResolver {
 
-        @Mutation(() => Boolean)
+        @Mutation(() => CreateChatRoomReturn)
         async createChatRoom(@Arg('createRoom') createRoom: CrateRoomInput, @Ctx() ctx: IContext) {
                 const messages: Array<IError> = []
 
@@ -68,15 +71,19 @@ export class CreateChatRoomResolver {
                                 }
                         })
 
-                        await prisma.chatRoomUser.create({
+                        const resCreatedRoom = await prisma.chatRoomUser.create({
                                 data: {
                                         chatRoomId: resChatRoom.id,
                                         userId: resCreateRoomUser.id,
                                         createdAtIso: new Date().toISOString(),
+                                }, select: {
+                                        id: true,
+                                        chatRoomId: true,
+                                        userId: true,
                                 }
                         })
 
-                        return true
+                        return resCreatedRoom
 
                 } catch (error) {
                         const message = generateMessage({

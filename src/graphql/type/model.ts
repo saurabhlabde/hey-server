@@ -102,7 +102,7 @@ export class ChatRoom {
         @Field(type => [Message])
         Messages: Message[]
 
-        @Field(type => Message)
+        @Field(type => Message, { nullable: true })
         lastMessage: Message
 
         @Field({ nullable: true })
