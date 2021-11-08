@@ -5,10 +5,11 @@ import { UserInputError } from 'apollo-server';
 // util
 import { generateMessage } from '../../../../utils/jwt/message';
 import { validAuth } from '../../../../utils/jwt/authCheck';
+import { CheckUserInRoom } from '../../../../utils/model/checkUserInRoom';
 
 // gql
 import { CheckRoomUserInput } from '../../../type/input/main/query';
-import { UserAuthReturn } from '../../../type/return/main';
+import { CheckRoomUserReturn } from '../../../type/return/main';
 
 // type
 import { IContext } from '@src/types/config/bootstrap';
@@ -18,7 +19,7 @@ import { IError } from '@src/types/utils/validation';
 Resolver()
 export class CheckRoomUserResolver {
 
-        @Query(() => Boolean)
+        @Query(() => CheckRoomUserReturn)
         async checkRoomUser(@Arg('checkRoomUser') room: CheckRoomUserInput, @Ctx() ctx: IContext) {
                 const messages: Array<IError> = []
 
@@ -40,40 +41,9 @@ export class CheckRoomUserResolver {
 
                 try {
 
-                        const resChatUser: any = await prisma.chatRoomUser.findMany({
-                                where: {
-                                        userId: user.userId
-                                },
-                                select: {
-                                        chatRoom: {
-                                                select: {
-                                                        id: true
-                                                }
-                                        }
-                                }
-                        })
+                        const { data } = await CheckUserInRoom({ prisma, userId, activeUserId: user.userId })
 
-                        const resChatRoomUser = await prisma.chatRoomUser.findMany({
-                                where: {
-                                        AND: [
-                                                {
-                                                        chatRoomId: { in: [...resChatUser.map((room: any) => room.chatRoom.id)] }
-                                                },
-                                                {
-                                                        userId: { notIn: user.userId }
-                                                }
-                                        ]
-                                },
-                                select: {
-                                        userId: true
-                                }
-                        })
-
-                        const isRoomUser = [...resChatRoomUser.map((user: any) => user.userId !== userId)]
-
-                        let checker = (arr: any) => arr.every(Boolean);
-
-                        return checker(isRoomUser)
+                        return data
 
                 } catch (error) {
                         const message = generateMessage({

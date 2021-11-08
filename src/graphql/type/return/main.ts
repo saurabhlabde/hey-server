@@ -18,12 +18,24 @@ export class UserAuthReturn {
 
 @ObjectType()
 export class CreateChatRoomReturn {
-        @Field()
+        @Field({ nullable: true })
         id: number
 
-        @Field()
+        @Field({ nullable: true })
         chatRoomId: number
 
-        @Field()
+        @Field({ nullable: true })
+        userId: number
+}
+
+@ObjectType()
+export class CheckRoomUserReturn {
+        @Field({ nullable: true })
+        isValid: boolean
+
+        @Field({ nullable: true })
+        chatRoomId: number
+
+        @Field({ nullable: true })
         userId: number
 }
