@@ -63,7 +63,8 @@ export class UpdateMessageStatusResolver {
                         })
 
                         await ctx.pubSub.publish("UPDATE_MESSAGE", {
-                                id: resUpdateMessage.id
+                                id: resUpdateMessage.id,
+                                type: 'UPDATE'
                         })
 
                         return true

@@ -59,7 +59,8 @@ export class CratedMessageResolver {
                         })
 
                         await ctx.pubSub.publish("ADD_MESSAGE", {
-                                id: res.id
+                                id: res.id,
+                                type: 'CREATION'
                         })
 
                         return true

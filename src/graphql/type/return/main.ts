@@ -42,3 +42,12 @@ export class CheckRoomUserReturn {
 }
 
 
+// subscription
+@ObjectType()
+export class MessageSubscriptionReturn {
+        @Field()
+        message: Message
+
+        @Field()
+        type: String
+}

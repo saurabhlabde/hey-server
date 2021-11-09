@@ -43,6 +43,12 @@ export class GetMessagesResolver {
                         const resMessages: any = await prisma.message.findMany({
                                 where: {
                                         chatRoomID: roomId
+                                }, include: {
+                                        User: {
+                                                select: {
+                                                        id: true
+                                                }
+                                        }
                                 }, orderBy: {
                                         createdAt: "desc"
                                 }
