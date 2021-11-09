@@ -60,7 +60,7 @@ export class GetChatRoomResolver {
                                 }, orderBy: {
                                         chatRoom: {
                                                 lastMessage: {
-                                                        createdAt: "desc"
+                                                        createdAt: "asc",
                                                 }
                                         }
                                 }

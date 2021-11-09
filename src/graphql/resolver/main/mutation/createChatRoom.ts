@@ -58,7 +58,6 @@ export class CreateChatRoomResolver {
 
                 try {
 
-
                         const { data } = await CheckUserInRoom({ prisma, userId, activeUserId: user.userId })
 
                         console.log(data, 'data');

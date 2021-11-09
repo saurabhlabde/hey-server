@@ -1,4 +1,5 @@
 import { Field, ObjectType } from "type-graphql";
+import { Message } from "../model";
 
 @ObjectType()
 export class UserAuthReturn {
@@ -39,3 +40,5 @@ export class CheckRoomUserReturn {
         @Field({ nullable: true })
         userId: number
 }
+
+

@@ -44,7 +44,7 @@ export class CratedMessageResolver {
                                         chatRoomID: chatRoomId,
                                         content,
                                         image,
-                                        status: 'DELIVERED',
+                                        status: "SEND",
                                         chatRoomId: chatRoomId,
                                         createdAtIso: new Date().toISOString(),
                                 }
@@ -58,16 +58,13 @@ export class CratedMessageResolver {
                                 }
                         })
 
-                        await ctx.pubSub.publish("ADD_MESSAGES", {
+                        await ctx.pubSub.publish("ADD_MESSAGE", {
                                 id: res.id
                         })
 
                         return true
 
                 } catch (error) {
-
-                        console.log(error, 'error');
-
 
                         const message = generateMessage({
                                 messages,

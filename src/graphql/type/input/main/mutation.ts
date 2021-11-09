@@ -17,3 +17,12 @@ export class CrateMessageInput {
         @Field()
         chatRoomId: number
 }
+
+@InputType()
+export class UpdateMessageStatusInput {
+        @Field()
+        type: "SEND" | "DELIVERED" | "READ"
+
+        @Field()
+        messageId: number
+}
