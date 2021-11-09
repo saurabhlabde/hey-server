@@ -8,15 +8,15 @@ generator client {
 }
 
 model User {
-        id           Int       @id @default(autoincrement())
+        id           Int      @id @default(autoincrement())
         firstname    String
         lastname     String
-        email        String    @unique
+        email        String   @unique
         password     String
         profileImage String
         createdAtIso String
-        createdAt    DateTime  @default(now())
-        lastOnlineAt DateTime?
+        createdAt    DateTime @default(now())
+        lastOnlineAt BigInt?
 
         ChatRoom     ChatRoom[]
         Messages     Message[]

@@ -1,5 +1,5 @@
 import { Field, ObjectType } from "type-graphql";
-import { Message } from "../model";
+import { Message, UserForUserLastOnline } from "../model";
 
 @ObjectType()
 export class UserAuthReturn {
@@ -45,9 +45,15 @@ export class CheckRoomUserReturn {
 // subscription
 @ObjectType()
 export class MessageSubscriptionReturn {
-        @Field()
+        @Field(type => Message)
         message: Message
 
         @Field()
         type: String
+}
+
+@ObjectType()
+export class UserLastOnlineSubscriptionReturn {
+        @Field(type => UserForUserLastOnline)
+        user: UserForUserLastOnline
 }

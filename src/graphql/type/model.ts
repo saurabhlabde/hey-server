@@ -5,6 +5,7 @@ export class User {
         @Field()
         id: number
 
+
         @Field()
         firstname: string
 
@@ -25,6 +26,34 @@ export class User {
 
         @Field()
         createdAt: Date
+
+        @Field({ nullable: true })
+        lastOnlineAt: bigint
+}
+
+@ObjectType()
+export class UserForMessage {
+        @Field({ nullable: true })
+        id: number
+
+        @Field({ nullable: true })
+        firstname: string
+
+        @Field({ nullable: true })
+        lastname: string
+
+        @Field({ nullable: true })
+        profileImage: string
+}
+
+
+@ObjectType()
+export class UserForUserLastOnline {
+        @Field({ nullable: true })
+        id: number
+
+        @Field({ nullable: true })
+        lastOnlineAt: bigint
 }
 
 enum IStatus {
@@ -66,8 +95,8 @@ export class Message {
         @Field()
         createdAt: Date
 
-        @Field(type => User, { nullable: true })
-        User: User
+        @Field(type => UserForMessage, { nullable: true })
+        User: UserForMessage
 
         @Field({ nullable: true })
         chatRoomId: number

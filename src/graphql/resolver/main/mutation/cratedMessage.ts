@@ -20,7 +20,7 @@ export class CratedMessageResolver {
         async createMessage(@Arg('createMessage') message: CrateMessageInput, @Ctx() ctx: IContext) {
                 const messages: Array<IError> = []
 
-                const { content, image, chatRoomId } = message
+                const { content, image, chatRoomId, messageReplyId } = message
 
                 if (content?.trim() === '' && !image || content?.trim() === '') {
                         const message = generateMessage({
@@ -46,6 +46,7 @@ export class CratedMessageResolver {
                                         image,
                                         status: "SEND",
                                         chatRoomId: chatRoomId,
+                                        replyToMessageID: messageReplyId,
                                         createdAtIso: new Date().toISOString(),
                                 }
                         })

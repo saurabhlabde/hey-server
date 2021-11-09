@@ -16,6 +16,9 @@ export class CrateMessageInput {
 
         @Field()
         chatRoomId: number
+
+        @Field({ nullable: true })
+        messageReplyId: number
 }
 
 @InputType()

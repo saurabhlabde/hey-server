@@ -14,9 +14,11 @@ import { GetUserResolver } from './resolver/main/query/user'
 import { GetUsersResolver } from './resolver/main/query/users'
 import { CheckRoomUserResolver } from './resolver/main/query/checkRoomUser'
 import { UpdateMessageStatusResolver } from './resolver/main/mutation/updateMessageStatus'
+import { UpdateUserLastOnlineResolver } from './resolver/main/mutation/updateUserLastOnline'
 
 // subscribe
 import { MessageSubscriptionResolver } from './resolver/main/subscription/message'
+import { UserLastOnlineSubscriptionResolver } from './resolver/main/subscription/userLastOnline'
 
 export const resolvers = [
 
@@ -36,7 +38,9 @@ export const resolvers = [
         GetUsersResolver,
         CheckRoomUserResolver,
         UpdateMessageStatusResolver,
+        UpdateUserLastOnlineResolver,
 
         // subscribe
         MessageSubscriptionResolver,
+        UserLastOnlineSubscriptionResolver,
 ] as const
