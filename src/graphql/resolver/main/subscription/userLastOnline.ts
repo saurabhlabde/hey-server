@@ -33,6 +33,9 @@ export class UserLastOnlineSubscriptionResolver {
                                 }
                         })
 
+
+                        console.log(typeof Number(BigInt(resUser.lastOnlineAt)).toExponential(), 'big big')
+
                         return {
                                 user: resUser,
                         }

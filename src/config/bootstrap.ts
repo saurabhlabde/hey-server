@@ -50,6 +50,7 @@ export const bootstrap = async () => {
                 tracing: true,
                 subscriptions: {
                         onConnect(connectionParams, webSocket) {
+
                                 validAuthSubscription({ context: connectionParams })
                                 console.log("websocket connect");
                         },

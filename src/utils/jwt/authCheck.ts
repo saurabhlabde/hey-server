@@ -30,7 +30,7 @@ interface IValidAuthSubscription {
 }
 
 export const validAuthSubscription = async ({ context }: IValidAuthSubscription) => {
-        const authHeader = context?.Authorization
+        const authHeader = context?.headers?.Authorization ? context.headers.Authorization : context?.Authorization ? context.Authorization : null
 
         if (authHeader) {
                 const token = authHeader.split("Bearer ")[1];

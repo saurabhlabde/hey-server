@@ -16,7 +16,7 @@ model User {
         profileImage String
         createdAtIso String
         createdAt    DateTime @default(now())
-        lastOnlineAt BigInt?
+        lastOnlineAt String?
 
         ChatRoom     ChatRoom[]
         Messages     Message[]

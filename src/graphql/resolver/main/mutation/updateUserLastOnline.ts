@@ -27,7 +27,7 @@ export class UpdateUserLastOnlineResolver {
                                 where: {
                                         id: user.userId
                                 }, data: {
-                                        lastOnlineAt: +new Date()
+                                        lastOnlineAt: `${+new Date()}`
                                 }, select: {
                                         id: true,
                                 }

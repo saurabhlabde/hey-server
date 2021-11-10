@@ -58,6 +58,7 @@ export class RegisterResolver {
                                         profileImage,
                                         password: passwordHash,
                                         createdAtIso: new Date().toISOString(),
+                                        lastOnlineAt: `${+new Date()}`
                                 }, select: {
                                         id: true
                                 }

@@ -1,4 +1,4 @@
-import { Field, ObjectType } from "type-graphql";
+import { Field, Float, ObjectType } from "type-graphql";
 
 @ObjectType()
 export class User {
@@ -28,7 +28,7 @@ export class User {
         createdAt: Date
 
         @Field({ nullable: true })
-        lastOnlineAt: bigint
+        lastOnlineAt: string
 }
 
 @ObjectType()
@@ -53,7 +53,7 @@ export class UserForUserLastOnline {
         id: number
 
         @Field({ nullable: true })
-        lastOnlineAt: bigint
+        lastOnlineAt: string
 }
 
 enum IStatus {

@@ -54,9 +54,13 @@ export class LoginResolver {
                                 throw new UserInputError("INVALID_LOGIN", { errors: message });
                         }
 
-                        const tokenInfo = {
-                                id: res?.id,
-                        }
+                        await prisma.user.update({
+                                where: {
+                                        id: res.id,
+                                }, data: {
+                                        lastOnlineAt: `${+new Date()}`
+                                }
+                        })
 
                         const token = generateAccessToken({ info: res.id });
 
