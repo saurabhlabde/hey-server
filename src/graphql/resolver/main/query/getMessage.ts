@@ -7,7 +7,7 @@ import { generateMessage } from '../../../../utils/jwt/message';
 import { validAuth } from '../../../../utils/jwt/authCheck';
 
 // gql
-import { GetMessagesInput } from '../../../type/input/main/query';
+import { GetMessageInput } from '../../../type/input/main/query';
 import { Message } from '../../../type/model';
 
 // type
@@ -16,18 +16,18 @@ import { IValidAuth } from '@src/types/utils/jwt';
 import { IError } from '@src/types/utils/validation';
 
 Resolver()
-export class GetMessagesResolver {
+export class GetMessageResolver {
 
-        @Query(() => [Message])
-        async getMessages(@Arg('messages') room: GetMessagesInput, @Ctx() ctx: IContext) {
+        @Query(() => Message)
+        async getMessage(@Arg('message') messageInput: GetMessageInput, @Ctx() ctx: IContext) {
                 const messages: Array<IError> = []
 
-                const { roomId } = room
+                const { messageId } = messageInput
 
-                if (!roomId) {
+                if (!messageId) {
                         const message = generateMessage({
                                 messages,
-                                message: "invalid user id",
+                                message: "invalid message id",
                                 type: "error"
                         })
 
@@ -40,9 +40,9 @@ export class GetMessagesResolver {
 
                 try {
 
-                        const resMessages: any = await prisma.message.findMany({
+                        const resMessage: any = await prisma.message.findFirst({
                                 where: {
-                                        chatRoomID: roomId
+                                        id: messageId
                                 }, include: {
                                         User: {
                                                 select: {
@@ -52,12 +52,10 @@ export class GetMessagesResolver {
                                                         profileImage: true,
                                                 }
                                         }
-                                }, orderBy: {
-                                        createdAt: "desc"
-                                }
+                                },
                         })
 
-                        return resMessages
+                        return resMessage
 
                 } catch (error) {
                         const message = generateMessage({

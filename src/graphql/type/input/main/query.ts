@@ -1,9 +1,15 @@
 import { Field, InputType } from "type-graphql"
 
 @InputType()
-export class GetMessageInput {
+export class GetMessagesInput {
         @Field()
         roomId: number
+}
+
+@InputType()
+export class GetMessageInput {
+        @Field()
+        messageId: number
 }
 
 @InputType()

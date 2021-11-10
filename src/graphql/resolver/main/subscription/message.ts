@@ -30,7 +30,10 @@ export class MessageSubscriptionResolver {
                                 }, include: {
                                         User: {
                                                 select: {
-                                                        id: true
+                                                        id: true,
+                                                        firstname: true,
+                                                        lastname: true,
+                                                        profileImage: true,
                                                 }
                                         }
                                 },
